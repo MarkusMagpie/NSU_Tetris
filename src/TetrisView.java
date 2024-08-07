@@ -12,6 +12,7 @@ import java.awt.Point;
 
 public class TetrisView extends JPanel {
     private TetrisModel model;
+    private final int cell_size = 30;
 
     public TetrisView(TetrisModel model) {
         this.model = model;
@@ -29,11 +30,16 @@ public class TetrisView extends JPanel {
     // draw board from TetrisModel class
     // M -> V
     private void DrawBoard(Graphics g, boolean[][] board) {
-        for (int x = 0; x < board.length; ++x) {
-            for (int y = 0; y < board[x].length; ++y) {
+        for (int y = 0; y < board[0].length; y++) {
+            for (int x = 0; x < board.length; x++) {
                 if (board[x][y]) {
                     g.setColor(Color.GRAY);
-                    g.fillRect(x * 40, y * 40, 40, 40);
+                    g.fillRect(x * cell_size, y * cell_size, cell_size, cell_size);
+                    g.setColor(Color.BLACK);
+                    g.drawRect(x * cell_size, y * cell_size, cell_size, cell_size);
+                } else {
+                    g.setColor(Color.BLACK);
+                    g.drawRect(x * cell_size, y * cell_size, cell_size, cell_size);
                 }
             }
         }
@@ -42,7 +48,9 @@ public class TetrisView extends JPanel {
     private void DrawCurrentPiece(Graphics g, TetroMino piece) {
         g.setColor(piece.getColor());
         for (Point p : piece.getCoordinates()) {
-            g.fillRect(p.x * 40, p.y * 40, 40, 40);
+            g.fillRect(p.x * cell_size, p.y * cell_size, cell_size, cell_size);
+            g.setColor(Color.BLACK);
+            g.drawRect(p.x * cell_size, p.y * cell_size, cell_size, cell_size);
         }
     }
 }

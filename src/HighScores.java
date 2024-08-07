@@ -3,7 +3,7 @@ import java.util.*;
 
 public class HighScores {
     private List<Integer> scores;
-    private String filename = "highscores.txt";
+    private final String filename = "src/highscores.txt";
 
     public HighScores() {
         scores = new ArrayList<>();
@@ -16,8 +16,10 @@ public class HighScores {
             while ((line = in.readLine()) != null) {
                 scores.add(Integer.parseInt(line));
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
         } catch (IOException e) {
-            System.out.println("ERROR: " + e.getMessage());
+            System.out.println("IOE exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -30,7 +32,7 @@ public class HighScores {
                 out.write(s + "\n");
             }
         } catch (IOException e) {
-            System.out.println("ERROR: " + e.getMessage());
+            System.out.println("IOE exception: " + e.getMessage());
             e.printStackTrace();
         }
     }

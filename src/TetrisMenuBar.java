@@ -1,17 +1,49 @@
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TetrisMenuBar extends JMenuBar {
-
     public TetrisMenuBar(TetrisController controller) {
-        JMenu file_menu = new JMenu("File");
+        JMenu game_menu = new JMenu("Game");
         JMenuItem new_game_item = new JMenuItem("New Game");
         JMenuItem exit_item = new JMenuItem("Exit");
         JMenuItem high_scores_item = new JMenuItem("High Scores");
+        JMenuItem about = new JMenuItem("About");
 
-        file_menu.add(new_game_item);
-        file_menu.add(exit_item);
-        file_menu.add(high_scores_item);
+        new_game_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.StartNewGame();
+//                controller.ResumeGame();
+            }
+        });
 
-        add(file_menu);
+        high_scores_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.ShowHighScores();
+            }
+        });
+
+        exit_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.ExitVerification();
+            }
+        });
+
+        about.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.ShowAbout();
+            }
+        });
+
+        game_menu.add(new_game_item);
+        game_menu.add(high_scores_item);
+        game_menu.add(about);
+        game_menu.add(exit_item);
+
+        add(game_menu);
     }
 }
