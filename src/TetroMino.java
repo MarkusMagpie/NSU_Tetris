@@ -40,4 +40,47 @@ public class TetroMino {
             coordinates[i].y = center.y + x;
         }
     }
+
+    // factory methods to create all kinds of tetrominos (7)
+    public static TetroMino createI() {
+        return new TetroMino(new Point[]{
+                new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(3, 1)
+        }, Color.CYAN);
+    }
+
+    public static TetroMino createO() {
+        return new TetroMino(new Point[]{
+                new Point(1, 0), new Point(2, 0), new Point(1, 1), new Point(2, 1)
+        }, Color.YELLOW);
+    }
+
+    public static TetroMino createT() {
+        return new TetroMino(new Point[]{
+                new Point(1, 0), new Point(0, 1), new Point(1, 1), new Point(2, 1)
+        }, Color.MAGENTA);
+    }
+
+    public static TetroMino createS() {
+        return new TetroMino(new Point[]{
+                new Point(1, 0), new Point(2, 0), new Point(0, 1), new Point(1, 1)
+        }, Color.GREEN);
+    }
+
+    public static TetroMino createZ() {
+        return new TetroMino(new Point[]{
+                new Point(0, 0), new Point(1, 0), new Point(1, 1), new Point(2, 1)
+        }, Color.RED);
+    }
+
+    public static TetroMino createJ() {
+        return new TetroMino(new Point[]{
+                new Point(0, 0), new Point(0, 1), new Point(1, 1), new Point(2, 1)
+        }, Color.BLUE);
+    }
+
+    public static TetroMino createL() {
+        return new TetroMino(new Point[]{
+                new Point(2, 0), new Point(0, 1), new Point(1, 1), new Point(2, 1)
+        }, Color.ORANGE);
+    }
 }

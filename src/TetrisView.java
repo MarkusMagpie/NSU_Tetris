@@ -16,7 +16,7 @@ public class TetrisView extends JPanel {
 
     public TetrisView(TetrisModel model) {
         this.model = model;
-        setPreferredSize(new Dimension(400, 800));
+        setPreferredSize(new Dimension(cell_size * model.GetWidth(), cell_size * model.GetHeight()));
         setBackground(new Color(83, 83, 83));
     }
 
@@ -52,5 +52,10 @@ public class TetrisView extends JPanel {
             g.setColor(Color.BLACK);
             g.drawRect(p.x * cell_size, p.y * cell_size, cell_size, cell_size);
         }
+    }
+
+    // getter for proper grid creation
+    public int GetCellSize() {
+        return cell_size;
     }
 }

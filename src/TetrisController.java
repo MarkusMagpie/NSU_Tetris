@@ -76,7 +76,7 @@ public class TetrisController implements KeyListener {
     public void keyTyped(KeyEvent e) {}
 
     public void StartNewGame() {
-        model = new TetrisModel();
+        model = new TetrisModel(10, 20);
         ResumeGame();
         view.repaint();
     }

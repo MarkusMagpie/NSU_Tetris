@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        TetrisModel model = new TetrisModel(); // M
+        TetrisModel model = new TetrisModel(10, 20); // M
         TetrisView view = new TetrisView(model); // V
         HighScores hs = new HighScores();
         TetrisController controller = new TetrisController(model, view, hs); // C
@@ -14,7 +14,8 @@ public class Main {
 
         JFrame frame = new JFrame("Tetris");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 800);
+
+        frame.setSize(new Dimension(view.GetCellSize() * model.GetWidth() + 30, view.GetCellSize() * model.GetHeight() + 90));
         frame.setLayout(new BorderLayout());
         frame.add(view, BorderLayout.CENTER);
         frame.add(score_panel, BorderLayout.SOUTH);

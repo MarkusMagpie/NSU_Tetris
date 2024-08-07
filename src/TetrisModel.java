@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
@@ -5,15 +6,17 @@ import java.util.Random;
 // controls the state of game field, figure
 
 public class TetrisModel {
-    private final int width = 10;
-    private final int height = 20;
+    private int width;
+    private int height;
     private TetroMino current_piece;
     private boolean[][] board;
     private int score;
     private boolean paused;
 
-    public TetrisModel() {
-        board = new boolean[width][height];
+    public TetrisModel(int width, int height) {
+        board = new boolean[width][height];;
+        this.width = width;
+        this.height = height;
         SpawnPiece();
 //        score = 0;
         paused = false;
@@ -21,8 +24,35 @@ public class TetrisModel {
 
     private void SpawnPiece() {
         // create a single T-tetromino (randomly)
-        Point[] coords = { new Point(0, 0), new Point(1, 0), new Point(2, 0), new Point(3, 0) };
-        current_piece = new TetroMino(coords, Color.RED);
+//        Point[] coords = { new Point(0, 0), new Point(1, 0), new Point(2, 0), new Point(3, 0) };
+//        current_piece = new TetroMino(coords, Color.RED);
+
+        Random random = new Random();
+        int shape = random.nextInt(7);
+        switch (shape) {
+            case 0:
+                current_piece = TetroMino.createI();
+                break;
+            case 1:
+                current_piece = TetroMino.createO();
+                break;
+            case 2:
+                current_piece = TetroMino.createT();
+                break;
+            case 3:
+                current_piece = TetroMino.createS();
+                break;
+            case 4:
+                current_piece = TetroMino.createZ();
+                break;
+            case 5:
+                current_piece = TetroMino.createJ();
+                break;
+            case 6:
+                current_piece = TetroMino.createL();
+                break;
+        }
+//        PlacePiece();
     }
 
     public void MovePieceDown() {
@@ -36,7 +66,8 @@ public class TetrisModel {
             PlacePiece();
             SpawnPiece();
             if (!CanMove(current_piece, 0, 0)) {
-                System.out.println("GAME OVER at MovePieceDown");
+//                System.out.println("GAME OVER at MovePieceDown");
+                JOptionPane.showMessageDialog(null, "GAME OVER", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }
@@ -69,6 +100,7 @@ public class TetrisModel {
         // check if we can't rotate, return to original position
         if (!CanMove(current_piece, 0, 0)) {
             System.out.println("Cannot rotate object");
+//            JOptionPane.showMessageDialog(null, "Cannot rotate object", "Error", JOptionPane.ERROR_MESSAGE);
             current_piece.rotate();
             current_piece.rotate();
             current_piece.rotate();
@@ -84,6 +116,8 @@ public class TetrisModel {
         ClearRows();
     }
 
+    // check from bottom to top if any row is full
+    //    if it is, then add 100 score
     private void ClearRows() {
         for (int y = height - 1; y >= 0; --y) {
             boolean full_row = true;
@@ -147,5 +181,14 @@ public class TetrisModel {
 
     public boolean GetPause() {
         return paused;
+    }
+
+    // getters for TetrisView to creatte initial grid
+    public int GetWidth() {
+        return width;
+    }
+
+    public int GetHeight() {
+        return height;
     }
 }
