@@ -22,6 +22,17 @@ public class TetrisModel {
         paused = false;
     }
 
+    public void Reset() {
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                board[x][y] = false;
+            }
+        }
+        score = 0;
+        paused = false;
+        SpawnPiece();
+    }
+
     private void SpawnPiece() {
         // create a single T-tetromino (randomly)
 //        Point[] coords = { new Point(0, 0), new Point(1, 0), new Point(2, 0), new Point(3, 0) };

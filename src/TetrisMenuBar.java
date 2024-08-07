@@ -14,7 +14,6 @@ public class TetrisMenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.StartNewGame();
-//                controller.ResumeGame();
             }
         });
 

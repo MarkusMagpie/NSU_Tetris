@@ -75,31 +75,34 @@ public class TetrisController implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {}
 
-    public void StartNewGame() {
-        model = new TetrisModel(10, 20);
-        ResumeGame();
-        view.repaint();
-    }
-
-    public void ShowHighScores() {
-        PauseGame();
-
-        List<Integer> scores = hs.GetScores();
-        StringBuilder sb = new StringBuilder();
-        for (int score : scores) {
-            sb.append(score).append("\n");
-        }
-        JOptionPane.showMessageDialog(view, sb.toString());
-
-        ResumeGame();
-    }
-
     public void PauseGame() {
         model.SetPause(true);
     }
 
     public void ResumeGame() {
         model.SetPause(false);
+    }
+
+    public void StartNewGame() {
+        PauseGame();
+        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to start new game?", "New Game Confirmation", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            System.out.println("New game started");
+            model.Reset();
+            view.repaint();
+        }
+        ResumeGame();
+    }
+
+    public void ShowHighScores() {
+        PauseGame();
+        List<Integer> scores = hs.GetScores();
+        StringBuilder sb = new StringBuilder();
+        for (int score : scores) {
+            sb.append(score).append("\n");
+        }
+        JOptionPane.showMessageDialog(view, sb.toString());
+        ResumeGame();
     }
 
     public void ShowAbout() {
