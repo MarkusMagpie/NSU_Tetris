@@ -9,7 +9,8 @@ public class Main {
         TetrisModel model = new TetrisModel(10, 20); // M
         TetrisView view = new TetrisView(model); // V
         HighScores hs = new HighScores();
-        TetrisController controller = new TetrisController(model, view, hs); // C
+        TimerPanel timer_panel = new TimerPanel();
+        TetrisController controller = new TetrisController(model, view, hs, timer_panel); // C
         ScorePanel score_panel = new ScorePanel(model);
 
         JFrame frame = new JFrame("Tetris");
@@ -19,6 +20,7 @@ public class Main {
         frame.setLayout(new BorderLayout());
         frame.add(view, BorderLayout.CENTER);
         frame.add(score_panel, BorderLayout.SOUTH);
+        frame.add(timer_panel, BorderLayout.NORTH);
         frame.addKeyListener(controller);
 
         TetrisMenuBar menuBar = new TetrisMenuBar(controller);

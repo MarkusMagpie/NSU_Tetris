@@ -1,8 +1,10 @@
-import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import java.util.List;
+
+import javax.swing.Timer;
+import javax.swing.JOptionPane;
 
 // TetrisController class
 // processes user input and updates game state
@@ -14,10 +16,23 @@ public class TetrisController implements KeyListener {
     private TetrisView view;
     private HighScores hs;
 
-    public TetrisController(TetrisModel model, TetrisView view, HighScores hs) {
+    private TimerPanel timer_panel;
+    private Timer game_timer;
+
+    public TetrisController(TetrisModel model, TetrisView view, HighScores hs, TimerPanel timer_panel) {
         this.model = model;
         this.view = view;
         this.hs = new HighScores();
+        this.timer_panel = timer_panel;
+        timer_panel.StartTimer();
+
+        // if game is not paused, start game timer
+        game_timer = new Timer(1000, e -> {
+            if (!model.GetPause()) {
+                model.MovePieceDown();
+                view.repaint();
+            }
+        });
     }
 
     @Override
@@ -77,10 +92,12 @@ public class TetrisController implements KeyListener {
 
     public void PauseGame() {
         model.SetPause(true);
+        timer_panel.StopTimer();
     }
 
     public void ResumeGame() {
         model.SetPause(false);
+        timer_panel.StartTimer();
     }
 
     public void StartNewGame() {
@@ -90,8 +107,11 @@ public class TetrisController implements KeyListener {
             System.out.println("New game started");
             model.Reset();
             view.repaint();
+            timer_panel.ResetTimer();
+            timer_panel.StartTimer();
+        } else {
+            ResumeGame();
         }
-        ResumeGame();
     }
 
     public void ShowHighScores() {
@@ -107,7 +127,8 @@ public class TetrisController implements KeyListener {
 
     public void ShowAbout() {
         PauseGame();
-        JOptionPane.showMessageDialog(null, "Tetris by Matvey Sorokin", "About", JOptionPane.INFORMATION_MESSAGE);
+        String about = "NSU 4th semester\nTetris by Matvey Sorokin";
+        JOptionPane.showMessageDialog(null, about, "About", JOptionPane.INFORMATION_MESSAGE);
         ResumeGame();
     }
 
