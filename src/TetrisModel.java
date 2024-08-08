@@ -74,7 +74,7 @@ public class TetrisModel {
                 p.y += 1;
             }
         } else {
-            PlacePiece();
+            PlacePiece(); // update coords at board
             SpawnPiece();
             if (!CanMove(current_piece, 0, 0)) {
 //                System.out.println("GAME OVER at MovePieceDown");

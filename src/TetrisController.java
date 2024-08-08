@@ -19,12 +19,16 @@ public class TetrisController implements KeyListener {
     private TimerPanel timer_panel;
     private Timer game_timer;
 
+    private String player_name;
+
     public TetrisController(TetrisModel model, TetrisView view, HighScores hs, TimerPanel timer_panel) {
         this.model = model;
         this.view = view;
         this.hs = new HighScores();
         this.timer_panel = timer_panel;
         timer_panel.StartTimer();
+
+        player_name = JOptionPane.showInputDialog(null, "Enter your username: ", "New Game", JOptionPane.QUESTION_MESSAGE);
 
         // if game is not paused, start game timer
         game_timer = new Timer(1000, e -> {
@@ -105,6 +109,12 @@ public class TetrisController implements KeyListener {
         int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to start new game?", "New Game Confirmation", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             System.out.println("New game started");
+
+            if (player_name != null) {
+                hs.AddScore(player_name, model.GetScore(), timer_panel.GetElapsedTime());
+            }
+            player_name = JOptionPane.showInputDialog(null, "Enter your username: ", "New Game", JOptionPane.QUESTION_MESSAGE);
+
             model.Reset();
             view.repaint();
             timer_panel.ResetTimer();
@@ -116,12 +126,7 @@ public class TetrisController implements KeyListener {
 
     public void ShowHighScores() {
         PauseGame();
-        List<Integer> scores = hs.GetScores();
-        StringBuilder sb = new StringBuilder();
-        for (int score : scores) {
-            sb.append(score).append("\n");
-        }
-        JOptionPane.showMessageDialog(view, sb.toString());
+        hs.ShowHighScores();
         ResumeGame();
     }
 
@@ -136,7 +141,8 @@ public class TetrisController implements KeyListener {
         PauseGame();
         int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-            System.out.println("Final score: " + model.GetScore());
+            hs.AddScore(player_name, model.GetScore(), timer_panel.GetElapsedTime());
+            System.out.println("Game exited");
             System.exit(0);
         }
         ResumeGame();

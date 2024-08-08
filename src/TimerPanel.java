@@ -43,4 +43,8 @@ public class TimerPanel extends JPanel {
         elapsedTime = 0;
         timer_label.setText("Time: 0");
     }
+
+    public int GetElapsedTime() {
+        return elapsedTime;
+    }
 }
